@@ -164,3 +164,4 @@ cdef extern from "System.h":
         # Export functions
         void export_init_function_MATLAB()
         void export_function_MATLAB(string, string, Matrix, lst, lst)
+        void export_function_MATLAB(string, string, Matrix, lst, lst,string)

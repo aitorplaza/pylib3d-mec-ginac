@@ -1448,7 +1448,7 @@ cdef class _System:
     ######## Export ########
 
 
-    cpdef _export_function_MATLAB(self, matrix, func_name, func_out_name=None):
+    cpdef _export_function_MATLAB(self, matrix, func_name, func_out_name=None, deps=None):
         if not isinstance(matrix, (str, Matrix)):
             raise TypeError('matrix argument must be a str or Matrix instance')
         if isinstance(matrix, str):
@@ -1469,11 +1469,19 @@ cdef class _System:
         # Optimize matrix list
         c_matrix_list_optimize(c_deref( (<Matrix>matrix)._get_c_handler()), atom_lst, expr_lst)
 
-        self._c_handler.export_function_MATLAB(
-            <bytes>func_name.encode(), <bytes>func_out_name.encode(),
-            c_deref((<Matrix>matrix)._get_c_handler()),
-            atom_lst, expr_lst
-        )
+        if deps is None:
+            print('deps is None')
+            self._c_handler.export_function_MATLAB(
+                <bytes>func_name.encode(), <bytes>func_out_name.encode(),
+                c_deref((<Matrix>matrix)._get_c_handler()),
+                atom_lst, expr_lst
+            )
+        else:
+            self._c_handler.export_function_MATLAB(
+                <bytes>func_name.encode(), <bytes>func_out_name.encode(),
+                c_deref((<Matrix>matrix)._get_c_handler()),
+                atom_lst, expr_lst, <bytes>deps.encode()
+            )        
 
 
     cpdef _export_numeric_init_function_MATLAB(self):

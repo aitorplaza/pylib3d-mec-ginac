@@ -1708,13 +1708,13 @@ class System(_System, EventProducer):
     ######## Export ########
 
 
-    def export_numeric_function_MATLAB(self, matrix, func_name, func_out_name=None):
-        '''export_numeric_function_MATLAB(matrix: Matrix, func_name: str[, func_out_name: str])
+    def export_numeric_function_MATLAB(self, matrix, func_name, func_out_name=None, deps=None):
+        '''export_numeric_function_MATLAB(matrix: Matrix, func_name: str, func_out_name: str, deps: str)
 
         Build a MATLAB script which defines a function that evaluates the given symbolic
         matrix numerically.
         '''
-        self._export_function_MATLAB(matrix, func_name, func_out_name)
+        self._export_function_MATLAB(matrix, func_name, func_out_name, deps)
 
 
     def export_numeric_init_function_MATLAB(self):
