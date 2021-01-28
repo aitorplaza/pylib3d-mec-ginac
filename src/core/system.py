@@ -1725,7 +1725,12 @@ class System(_System, EventProducer):
         '''
         self._export_numeric_init_function_MATLAB()
 
+    def export_environment_MATLAB(self):
+        '''export_environment_MATLAB()
 
+        It exports system environment (q,dq,ddq, param, joints,..) on MATLAB format 
+        '''
+        self._export_environment_MATLAB()
 
     export_numeric_func_MATLAB = export_numeric_function_MATLAB
     export_numeric_init_func_MATLAB = export_numeric_init_function_MATLAB

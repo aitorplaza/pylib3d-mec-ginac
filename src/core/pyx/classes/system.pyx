@@ -1486,7 +1486,8 @@ cdef class _System:
     cpdef _export_numeric_init_function_MATLAB(self):
         self._c_handler.export_init_function_MATLAB()
 
-
+    cpdef _export_environment_MATLAB(self):
+        self._c_handler.export_environment_m()
 
     ######## Mixin ########
 
