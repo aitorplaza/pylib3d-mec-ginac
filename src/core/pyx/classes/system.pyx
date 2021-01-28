@@ -1470,7 +1470,6 @@ cdef class _System:
         c_matrix_list_optimize(c_deref( (<Matrix>matrix)._get_c_handler()), atom_lst, expr_lst)
 
         if deps is None:
-            print('deps is None')
             self._c_handler.export_function_MATLAB(
                 <bytes>func_name.encode(), <bytes>func_out_name.encode(),
                 c_deref((<Matrix>matrix)._get_c_handler()),
