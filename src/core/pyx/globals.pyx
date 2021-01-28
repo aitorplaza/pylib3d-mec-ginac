@@ -158,7 +158,17 @@ def unatomize(x):
     # unatomize matrix
     return _matrix_from_c_value(c_unatomize(c_deref((<Matrix>x)._get_c_handler())))
 
+def atomize(x):
+    '''atomize(x: Expr) -> Expr
+    Atomize the given expression
+    '''
 
+    if not isinstance(x, (Expr)):
+        raise TypeError('Input argument must be an expression')
+
+    if isinstance(x, Expr):
+        # unatomize expression
+        return _expr_from_c(c_atomize_ex((<Expr>x)._c_handler))
 
 cpdef matrix_list_optimize(matrix):
     '''matrix_list_optimize(matrix: Matrix) -> Matrix, dict[str, str]

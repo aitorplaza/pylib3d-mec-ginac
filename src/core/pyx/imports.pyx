@@ -52,6 +52,7 @@ from src.core.pxd.cwrench3D       cimport Wrench3D       as c_Wrench3D
 from src.core.pxd.cglobals        cimport atomization          as c_atomization
 from src.core.pxd.cglobals        cimport gravity              as c_gravity
 from src.core.pxd.cglobals        cimport unatomize            as c_unatomize
+from src.core.pxd.cglobals        cimport atomize_ex           as c_atomize_ex
 from src.core.pxd.cglobals        cimport subs                 as c_subs
 from src.core.pxd.cglobals        cimport matrix_list_optimize as c_matrix_list_optimize
 
