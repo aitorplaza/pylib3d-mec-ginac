@@ -22,9 +22,10 @@ Create a temporal directory build that will be the folder where lib_3d_mec_ginac
 will be installed.
 Now configure & compile it::
 
-
+    mkdir build
+    git clone https://github.com/aitorplaza/lib_3d_mec_ginac.git
     cd lib_3d_mec_ginac
-    ./configure=$(pwd)/../build/
+    ./autogen.sh --prefix=$(pwd)/../build/
     make && make install
 
 
