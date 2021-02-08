@@ -37,8 +37,8 @@ Go the build directory and download pylib3d-mec-ginac::
 
 The next step is to copy the header files & binaries of lib_3d_mec_ginac to the library::
 
-    cp -r include/lib_3d_mec_ginac/*.h pylib3d-mec-ginac/include/
-    cp -L lib/lib_3d_mec_ginac-2.0.so pylib3d-mec-ginac/lib/linux/x86_64/lib_3d_mec_ginac.so
+    cp -r build/include/lib_3d_mec_ginac/*.h pylib3d-mec-ginac/include/
+    cp -L build/lib/lib_3d_mec_ginac-2.0.so pylib3d-mec-ginac/lib/linux/x86_64/lib_3d_mec_ginac.so
 
 
 Finally install the Python package::
