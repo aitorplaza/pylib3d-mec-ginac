@@ -34,6 +34,9 @@ Go the build directory and download pylib3d-mec-ginac::
     cd ../build
     git clone https://github.com/Vykstorm/pylib3d-mec-ginac.git -b stable
 
+Chanege library soname::
+
+    patchelf --set-soname lib_3d_mec_ginac.so lib_3d_mec_ginac-2.0-2.0.so.2.0.0
 
 The next step is to copy the header files & binaries of lib_3d_mec_ginac to the library::
 
