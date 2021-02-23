@@ -1285,8 +1285,8 @@ cdef class _System:
         if not isinstance(x, Matrix):
             raise TypeError('The first argument must be a matrix')
 
-        if x.get_num_rows() != 1:
-            raise ValueError('The first argument must be a row-matrix')
+        if x.get_num_rows() != 1 and x.get_num_cols() != 1:
+            raise ValueError('The first argument must be a row-matrix or col-matrix')
 
         if not isinstance(y, (Matrix, SymbolNumeric)):
             raise TypeError('The second argument after the matrix must be a matrix or a symbol')
@@ -1300,6 +1300,9 @@ cdef class _System:
 
 
             # Derivative of the matrix with respect a symbol
+            if x.get_num_cols() == 1:
+                x = x.transpose()
+
             return _matrix_from_c_value(
                 self._c_handler.jacobian(
                     c_deref(<c_Matrix*>(<Matrix>x)._get_c_handler()),
@@ -1307,7 +1310,7 @@ cdef class _System:
                 )
             )
         else:
-            if y.get_num_cols() != 1:
+            if y.get_num_cols() != 1 and y.get_num_rows() != 1:
                 raise ValueError('The second argument must be a column-matrix or a symbol')
             if not y.are_all_values_symbols(self):
                 raise ValueError('All symbolic expressions in the second matrix should be composed only by one symbol')
@@ -1331,6 +1334,11 @@ cdef class _System:
             symmetric = Expr(symmetric)
         else:
             symmetric = Expr(0)
+        
+        if x.get_num_cols() == 1:
+            x = x.transpose()
+        if y.get_num_rows() == 1:
+            y = y.transpose()       
 
         return _matrix_from_c_value(
             self._c_handler.jacobian(
