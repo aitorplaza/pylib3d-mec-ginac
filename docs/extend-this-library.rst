@@ -55,7 +55,22 @@ Verify the installation with::
 
     python -c "import lib3d_mec_ginac"
 
+Fix error with new GiNac
+=============================
 
+If GiNaC cahnges copy the headers from:
+    
+    /usr/include/ginac/
+    
+to pylib3d-mec-ginac/incluide
+    
+and copy and rename:
+
+    /usr/lib/x86_64-linux-gnu/libginac.so.11.1.1 
+
+to pylib3d-mec-ginac/lib/libginac.so
+   
+    
 
 Add a new C++ algorithm to the Python interface
 =============================
