@@ -32,7 +32,7 @@ Now configure & compile it::
 Go the build directory and download pylib3d-mec-ginac::
 
     cd ../build
-    git clone https://github.com/Vykstorm/pylib3d-mec-ginac.git -b stable
+    git clone https://github.com/aitorplaza/pylib3d-mec-ginac.git -b stable
 
 Chanege library soname::
 
