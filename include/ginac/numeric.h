@@ -3,7 +3,7 @@
  *  Makes the interface to the underlying bignum package available. */
 
 /*
- *  GiNaC Copyright (C) 1999-2019 Johannes Gutenberg University Mainz, Germany
+ *  GiNaC Copyright (C) 1999-2022 Johannes Gutenberg University Mainz, Germany
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -90,6 +90,8 @@ public:
 	numeric(unsigned int i);
 	numeric(long i);
 	numeric(unsigned long i);
+	numeric(long long i);
+	numeric(unsigned long long i);
 	numeric(long numer, long denom);
 	numeric(double d);
 	numeric(const char *);
@@ -106,7 +108,7 @@ public:
 	ex eval() const override;
 	ex evalf() const override;
 	ex subs(const exmap & m, unsigned options = 0) const override { return subs_one_level(m, options); } // overwrites basic::subs() for performance reasons
-	ex normal(exmap & repl, exmap & rev_lookup) const override;
+	ex normal(exmap & repl, exmap & rev_lookup, lst & modifier) const override;
 	ex to_rational(exmap & repl) const override;
 	ex to_polynomial(exmap & repl) const override;
 	numeric integer_content() const override;
