@@ -18,7 +18,7 @@ ubuntu 18.04 system was tested succesfully. Later versions of ubuntu and python 
 You can use [this script](install.sh) to install this library and its dependencies in your system, or just run the next code in your bash console:
 
 ```bash
-curl https://raw.githubusercontent.com/aitorplaza/pylib3d-mec-ginac/stable/install.sh | bash
+curl https://raw.githubusercontent.com/Vykstorm/pylib3d-mec-ginac/stable/install.sh | bash
 ```
 
 

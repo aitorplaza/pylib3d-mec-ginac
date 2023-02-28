@@ -1445,15 +1445,15 @@ class System(_System, EventProducer):
 
 
 
-    def derivative(self, *args, **kwargs):
-        '''derivative(x: Expr | Matrix | Vector[, base: Base][, frame: Frame]) -> Expr | Matrix | Vector3D
+    def timederivative(self, *args, **kwargs):
+        '''timederivative(x: Expr | Matrix | Vector[, base: Base][, frame: Frame]) -> Expr | Matrix | Vector3D
         Compute the time derivative of the given expression:
 
             :Example:
 
             >>> a = new_param('a')
             >>> t = get_time()
-            >>> derivative(a * t ** 2 + 20)
+            >>> timederivative(a * t ** 2 + 20)
             2*t*a
 
 
@@ -1461,7 +1461,7 @@ class System(_System, EventProducer):
         or vector:
 
             >>> v = new_vector('v', 1, a / t, a / t ** 2 )
-            >>> derivative(v)
+            >>> timederivative(v)
             [ 0  -t**(-2)*a  -2*t**(-3)*a ]
 
         :param base: Additional argument which is only valid if the first argument
@@ -1481,7 +1481,7 @@ class System(_System, EventProducer):
         return self._derivative(args, kwargs)
 
 
-    dt = derivative
+    dt = timederivative
 
 
 
@@ -1526,8 +1526,8 @@ class System(_System, EventProducer):
             >>> jacobian(m, q).shape
             (4, 3)
 
-        :param Matrix x: Must be a row matrix
-        :param Matrix y: Must be a column matrix
+        :param Matrix x: Must be a row or column matrix
+        :param Matrix y: Must be a row or column matrix
         :param Expr symmetric: It must be a symbolic expression indicating if the
             jacobian matrix computation should be symmetric or not. 0 for non symmetric.
             Otherwise it will be symmetric ( when evaluating the expression numerically )

@@ -3,7 +3,7 @@
  *  GiNaC library version information. */
 
 /*
- *  GiNaC Copyright (C) 1999-2022 Johannes Gutenberg University Mainz, Germany
+ *  GiNaC Copyright (C) 1999-2019 Johannes Gutenberg University Mainz, Germany
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,10 +27,10 @@
 #define GINACLIB_MAJOR_VERSION 1
 
 /* Minor version of GiNaC */
-#define GINACLIB_MINOR_VERSION 8
+#define GINACLIB_MINOR_VERSION 7
 
 /* Micro version of GiNaC */
-#define GINACLIB_MICRO_VERSION 2
+#define GINACLIB_MICRO_VERSION 7
 
 // GiNaC library version information. It has very little to do with GiNaC
 // version number. In particular, library version is OS dependent. 
@@ -49,15 +49,12 @@
 // increasing. This doesn't matter, though: there is not incurred cost
 // for numbers that are omitted, except for shrinking the available space
 // of leftover numbers. Not something we need to worry about yet. ;-)
-//
-// On Linux, the SONAME is libginac.so.$(GINAC_LT_CURRENT)-$(GINAC_LT_AGE).
-//
-// TODO, when breaking the SONAME:
+// TODO, when setting GINAC_LT_REVISION to 0:
 //  * change matrix inverse to use default argument (twice)
-//  * check for interfaces marked as deprecated
-#define GINAC_LT_CURRENT  12
+//  * remove interfaces marked as deprecated
+#define GINAC_LT_CURRENT  10
 #define GINAC_LT_REVISION 1
-#define GINAC_LT_AGE      1
+#define GINAC_LT_AGE      4
 
 /*
  * GiNaC archive file version information.

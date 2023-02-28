@@ -3,7 +3,7 @@
  *  Interface to GiNaC's ABC. */
 
 /*
- *  GiNaC Copyright (C) 1999-2022 Johannes Gutenberg University Mainz, Germany
+ *  GiNaC Copyright (C) 1999-2019 Johannes Gutenberg University Mainz, Germany
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -200,7 +200,7 @@ public:
 	virtual ex series(const relational & r, int order, unsigned options = 0) const;
 
 	// rational functions
-	virtual ex normal(exmap & repl, exmap & rev_lookup, lst & modifier) const;
+	virtual ex normal(exmap & repl, exmap & rev_lookup) const;
 	virtual ex to_rational(exmap & repl) const;
 	virtual ex to_polynomial(exmap & repl) const;
 

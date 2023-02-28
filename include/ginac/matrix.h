@@ -3,7 +3,7 @@
  *  Interface to symbolic matrices */
 
 /*
- *  GiNaC Copyright (C) 1999-2022 Johannes Gutenberg University Mainz, Germany
+ *  GiNaC Copyright (C) 1999-2019 Johannes Gutenberg University Mainz, Germany
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,6 +33,64 @@
 
 namespace GiNaC {
 
+/** Helper template to allow initialization of matrices via an overloaded
+ *  comma operator (idea stolen from Blitz++). */
+template <typename T, typename It>
+class matrix_init {
+public:
+	matrix_init(It i) : iter(i) {}
+
+	matrix_init<T, It> operator,(const T & x)
+	{
+		*iter = x;
+		return matrix_init<T, It>(++iter);
+	}
+
+	// The following specializations produce much tighter code than the
+	// general case above
+
+	matrix_init<T, It> operator,(int x)
+	{
+		*iter = T(x);
+		return matrix_init<T, It>(++iter);
+	}
+
+	matrix_init<T, It> operator,(unsigned int x)
+	{
+		*iter = T(x);
+		return matrix_init<T, It>(++iter);
+	}
+
+	matrix_init<T, It> operator,(long x)
+	{
+		*iter = T(x);
+		return matrix_init<T, It>(++iter);
+	}
+
+	matrix_init<T, It> operator,(unsigned long x)
+	{
+		*iter = T(x);
+		return matrix_init<T, It>(++iter);
+	}
+
+	matrix_init<T, It> operator,(double x)
+	{
+		*iter = T(x);
+		return matrix_init<T, It>(++iter);
+	}
+
+	matrix_init<T, It> operator,(const symbol & x)
+	{
+		*iter = T(x);
+		return matrix_init<T, It>(++iter);
+	}
+
+private:
+	matrix_init();
+	It iter;
+};
+
+
 /** Symbolic matrices. */
 class matrix : public basic
 {
@@ -44,6 +102,7 @@ public:
 	matrix(unsigned r, unsigned c, const lst & l);
 	matrix(std::initializer_list<std::initializer_list<ex>> l);
 
+	matrix_init<ex, exvector::iterator> operator=(const ex & x) attribute_deprecated;
 protected:
 	matrix(unsigned r, unsigned c, const exvector & m2);
 	matrix(unsigned r, unsigned c, exvector && m2);
@@ -117,6 +176,14 @@ protected:
 	exvector m;               ///< representation (cols indexed first)
 };
 GINAC_DECLARE_UNARCHIVER(matrix); 
+
+// First step of initialization of matrix with a comma-separated sequence
+// of expressions. Subsequent steps are handled by matrix_init<>::operator,().
+inline matrix_init<ex, exvector::iterator> matrix::operator=(const ex & x)
+{
+	m[0] = x;
+	return matrix_init<ex, exvector::iterator>(++m.begin());
+}
 
 // wrapper functions around member functions
 

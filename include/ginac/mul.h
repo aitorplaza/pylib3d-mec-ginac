@@ -3,7 +3,7 @@
  *  Interface to GiNaC's products of expressions. */
 
 /*
- *  GiNaC Copyright (C) 1999-2022 Johannes Gutenberg University Mainz, Germany
+ *  GiNaC Copyright (C) 1999-2019 Johannes Gutenberg University Mainz, Germany
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ public:
 	ex imag_part() const override;
 	ex evalm() const override;
 	ex series(const relational & s, int order, unsigned options = 0) const override;
-	ex normal(exmap & repl, exmap & rev_lookup, lst & modifier) const override;
+	ex normal(exmap & repl, exmap & rev_lookup) const override;
 	numeric integer_content() const override;
 	ex smod(const numeric &xi) const override;
 	numeric max_coefficient() const override;

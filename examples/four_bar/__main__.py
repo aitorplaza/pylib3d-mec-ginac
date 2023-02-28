@@ -164,8 +164,8 @@ e_z = new_vector('e_z', 0, 0, 1, 'xyz')
 Phi = Matrix(shape=[2, 1])
 Phi[0] = O2C * e_x
 Phi[1] = O2C * e_z
-dPhi = derivative(Phi)
-ddPhi = derivative(dPhi)
+dPhi = timederivative(Phi)
+ddPhi = timederivative(dPhi)
 
 # Phi_q
 Phi_q = jacobian(Phi.transpose(), Matrix.block(2, 1, q, q_aux))

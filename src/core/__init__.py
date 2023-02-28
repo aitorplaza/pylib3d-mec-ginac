@@ -91,7 +91,7 @@ for name in System.__dict__:
     if not any(map(name.startswith, ('get_', 'set_', 'new_', 'has_', 'reduced_'))) and\
     not any(map(lambda pattern: fullmatch(pattern, name),
         [r'\w+_point_branch', r'rotation_\w+', r'position_\w+', r'angular_\w+',
-        r'velocity_\w+', r'acceleration_\w+', 'twist', 'derivative', 'dt', 'jacobian',
+        r'velocity_\w+', r'acceleration_\w+', 'twist', 'timederivative', 'dt', 'jacobian',
         'diff', 'to_symbol', 'unatomize', 'atomize', r'\w+_wrench', r'export_\w+', r'compile_\w+',
         'save_state', 'restore_previous_state', 'evaluate']
     )):

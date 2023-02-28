@@ -3,7 +3,7 @@
  *  Interface to relations between expressions. */
 
 /*
- *  GiNaC Copyright (C) 1999-2022 Johannes Gutenberg University Mainz, Germany
+ *  GiNaC Copyright (C) 1999-2019 Johannes Gutenberg University Mainz, Germany
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -63,8 +63,6 @@ public:
 	void archive(archive_node& n) const override;
 	/** Read (a.k.a. deserialize) object from archive. */
 	void read_archive(const archive_node& n, lst& syms) override;
-	ex canonical() const;
-
 protected:
 	ex eval_ncmul(const exvector & v) const override;
 	bool match_same_type(const basic & other) const override;
