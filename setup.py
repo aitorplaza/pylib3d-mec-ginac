@@ -210,6 +210,7 @@ DEPENDENCIES += [
 ]
 
 if INSTALL_GUI:
+    print('GUI modules enabled [INSTALL_GUI=yes]')
     DEPENDENCIES.append('vtk-tk>=9.0.0')
 
 # Extra dependency links

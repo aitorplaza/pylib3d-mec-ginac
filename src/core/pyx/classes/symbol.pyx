@@ -246,7 +246,17 @@ cdef class SymbolNumeric(Object):
         .. note:: Sum operation can be performed between symbols and expressions, but
             this logic is implemented in Expr.__add__ metamethod
         '''
+        print('symbol __add__')
         return NotImplemented if isinstance(other, Expr) else Expr(self) + Expr(other)
+    def __radd__(self, other):
+        '''
+        Performs the sum operation with another symbol (right operand is SymbolNumeric). The result is a symbolic
+        expression.
+        :rtype: Expr
+        .. note:: Sum operation can be performed between symbols and expressions, but
+            this logic is implemented in Expr.__add__ metamethod
+        '''
+        return Expr(other) + Expr(self)
 
 
     def __sub__(self, other):
@@ -268,6 +278,12 @@ cdef class SymbolNumeric(Object):
             in the metamethods Expr.__mul__, Matrix.__mul__, Vector3D.__mul__ and Tensor3D.__mul__
         '''
         return NotImplemented if isinstance(other, (Expr, Matrix, Wrench3D)) else Expr(self) * Expr(other)
+    def __rmul__(self, other):
+        '''
+        Multiplies this symbol with another (right operand is float). The result is a symbolic expression.
+        :rtype: Expr
+        '''
+        return Expr(other) * Expr(self)
 
 
     def __truediv__(self, other):

@@ -220,6 +220,22 @@ cdef class Expr(Object):
         return _expr_from_c(Expr(self)._c_handler / Expr(other)._c_handler)
 
 
+    def __radd__(left_op, right_op):
+        '''
+        Sum two expressions (right operand is Expr).
+        :rtype: Expr
+        :raise TypeError: If the operands have incorrect types
+        .. note:: One of the operands can also be any object which can be converted to
+            an expression (a numeric symbol or number)
+        '''
+        return _expr_from_c(Expr(right_op)._c_handler + Expr(left_op)._c_handler)
+        
+    def __rmul__(left_op, right_op):
+        '''
+        Computes the product of two expressions (right operand is float). The result is a symbolic expression.
+        :rtype: Expr
+        '''
+        return _expr_from_c(Expr(right_op)._c_handler * Expr(left_op)._c_handler)
 
 
     ######## Arithmetic binary operations (inplace) ########
