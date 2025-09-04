@@ -259,6 +259,12 @@ cdef class SymbolNumeric(Object):
         return Expr(other) + Expr(self)
 
 
+    def __rsub__(self, other):
+        '''
+        Performs the subtraction operation with another symbol (right operand is float). The result is a symbolic expression.
+        :rtype: Expr
+        '''
+        return Expr(other) - Expr(self)
     def __sub__(self, other):
         '''
         Performs the subtraction operation with another symbol. The result is a symbolic
@@ -285,6 +291,12 @@ cdef class SymbolNumeric(Object):
         '''
         return Expr(other) * Expr(self)
 
+    def __rtruediv__(self, other):
+        '''
+        Performs the division operation with another symbol (right operand is float). The result is a symbolic expression.
+        :rtype: Expr
+        '''
+        return Expr(other) / Expr(self)
 
     def __truediv__(self, other):
         '''

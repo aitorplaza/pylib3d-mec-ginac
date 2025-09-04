@@ -236,7 +236,21 @@ cdef class Expr(Object):
         :rtype: Expr
         '''
         return _expr_from_c(Expr(right_op)._c_handler * Expr(left_op)._c_handler)
+    def __rsub__(left_op, right_op):
+        '''
+        Subtract two expressions (right operand is Expr).
+        :rtype: Expr
+        '''
+        return _expr_from_c(Expr(right_op)._c_handler - Expr(left_op)._c_handler)
 
+    def __rtruediv__(left_op, right_op):
+        '''
+        Divide two expressions (right operand is Expr).
+        :rtype: Expr
+        '''
+        if Expr(left_op) == 0:
+            raise ZeroDivisionError('Expression divided by zero')
+        return _expr_from_c(Expr(right_op)._c_handler / Expr(left_op)._c_handler)
 
     ######## Arithmetic binary operations (inplace) ########
 
