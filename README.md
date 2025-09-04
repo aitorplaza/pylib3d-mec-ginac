@@ -11,7 +11,7 @@ pylib3d_mec_ginac brings all the features of this library to a high level interp
 
 ## Installation
 
-You will need python==3.7 and ubuntu OS ( 64-bit ). For the time being, only
+You will need al least python==3.7 and ubuntu OS ( 64-bit ). For the time being, only
 ubuntu 18.04 system was tested succesfully. Later versions of ubuntu and python may also work.
 
 
@@ -21,6 +21,11 @@ You can use [this script](install.sh) to install this library and its dependenci
 curl https://raw.githubusercontent.com/Vykstorm/pylib3d-mec-ginac/stable/install.sh | bash
 ```
 
+### Debugging
+
+```bash
+python setup.py --debug install
+```
 
 ## Usage
 

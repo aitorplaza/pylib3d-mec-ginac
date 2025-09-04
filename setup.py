@@ -10,7 +10,7 @@ Setup script to install pylib3d-mec-ginac library.
 
 # setuptools & distutils
 from setuptools.command.build_ext import build_ext
-from distutils.core import setup
+from setuptools import setup
 from distutils.extension import Extension
 from sysconfig import get_path
 
@@ -31,14 +31,14 @@ from contextlib import contextmanager
 import builtins
 from io import StringIO
 import subprocess
+import argparse
 
 
 
 ######## INSTALLATION CONFIGURATION ########
 
 # Remove all graphical interface modules ( minimum installation )
-# INSTALL_GUI = environ.get('INSTALL_GUI', 'yes') in ('yes', 'true')
-INSTALL_GUI = 'false'
+INSTALL_GUI = environ.get('INSTALL_GUI', 'yes') in ('yes', 'true')
 
 
 ######## PACKAGE DESCRIPTION ########
@@ -113,6 +113,7 @@ if INSTALL_GUI:
 
 
 
+
 ######## C COMPILER CONFIGURATION ########
 
 # Directory containing header files used to build the extensions
@@ -177,7 +178,6 @@ EXTENSION_SOURCES = list(chain([PYX_MAIN], map(partial(join, CPP_DIR), listdir(C
 
 
 # This list holds all the extensions defined by this library
-print(f"DEBUG: INCLUDE_DIR = {abspath(INCLUDE_DIR)}")
 EXTENSIONS = [
     Extension(
         name=EXTENSION_NAME,
@@ -250,6 +250,12 @@ RUNTIME_CONFIG = {
 
 if __name__ == '__main__':
 
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='pylib3d-mec-ginac installation script.')
+    parser.add_argument('--debug', action='store_true', help='Enable debug messages and disable output suppression.')
+    args, remaining_argv = parser.parse_known_args()
+
+    DEBUG_MODE = args.debug
 
     ## Helper functions & variables
 
@@ -259,10 +265,13 @@ if __name__ == '__main__':
     # Context manager to supress messages on stdout and stderr
     @contextmanager
     def output_suppressed():
-        prev_stdout, sys.stdout = sys.stdout, logfile
-        prev_stderr, sys.stderr = sys.stderr, logfile
-        yield
-        sys.stdout, sys.stderr = prev_stdout, prev_stderr
+        if not DEBUG_MODE:
+            prev_stdout, sys.stdout = sys.stdout, logfile
+            prev_stderr, sys.stderr = sys.stderr, logfile
+            yield
+            sys.stdout, sys.stderr = prev_stdout, prev_stderr
+        else:
+            yield
 
     # Class to avoid "command line option ‘-Wstrict-prototypes’ is valid" warning
     class BuildExt(build_ext):
@@ -322,25 +331,27 @@ if __name__ == '__main__':
     with output_suppressed():
         for lib in listdir(join(root_dir, LIBRARIES_DIR)):
             src, dst = join(root_dir, LIBRARIES_DIR, lib), join(RUNTIME_LIBRARIES_DIR, lib)
-            print(f'Copying file {src} to {dst}')
+            if DEBUG_MODE:
+                print(f'DEBUG: Copying file {src} to {dst}')
             copyfile(src, dst)
     print(' [done]')
 
 
     ## Generate C-Python extension
     print('- Generating cpython extension', end='')
-    # with output_suppressed(): # Temporarily disable output suppression
-    extensions = cythonize(EXTENSIONS,
-        compiler_directives={'language_level': 3}, nthreads=2, force=True)
+    with output_suppressed(): # Temporarily disable output suppression
+        extensions = cythonize(EXTENSIONS,
+            compiler_directives={'language_level': 3}, nthreads=2, force=True)
     print(' [done]')
 
 
     ## Invoke distutils setup
     print("- Compiling extension and installing package", end='')
-    # with output_suppressed(): # Temporarily disable output suppression
-    setup(
-        name=NAME,
-        version=VERSION,
+    with output_suppressed(): # Temporarily disable output suppression
+        setup(
+            name=NAME,
+            version=VERSION,
+            script_args=remaining_argv, # Pass remaining arguments to setuptools
 
             author=AUTHOR,
             author_email=AUTHOR_EMAIL,
