@@ -23,6 +23,7 @@ from src.core.pxd.cwrench3D   cimport Wrench3D
 cdef extern from "Globals.h":
     bint atomization
     bint gravity
+    void (*outError)(const char*) noexcept
 
 
     # Unatomization

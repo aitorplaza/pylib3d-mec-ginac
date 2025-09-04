@@ -29,7 +29,7 @@ using std::vector;
 
 extern int atomization;//0-> work without atomization; 1-> work with atomization
 extern int gravity;//0-> work with down gravity; 1-> work with up gravity
-extern void  (  * outError ) (const char *  );
+extern void  (  * outError ) (const char *  ) noexcept;
 void printError ( char * args );
 
 string itoa( const long int& x );

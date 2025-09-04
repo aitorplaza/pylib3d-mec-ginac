@@ -41,7 +41,7 @@ cdef extern from "System.h":
     cdef cppclass System:
         # Constructors
         System() except +
-        System(void(*func)(const char*)) except +
+        System(void(*func)(const char*) noexcept)
 
         # Attributes
         symbol_numeric t

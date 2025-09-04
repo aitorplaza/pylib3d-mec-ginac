@@ -7,7 +7,7 @@ class System
 
 ######## Helper types, variables & methods ########
 
-cdef void outError(const char* msg):
+cdef void outError(const char* msg) noexcept:
     # Redefinition of outError function (to suppress error messages)
     #print((<bytes>msg).decode())
     pass

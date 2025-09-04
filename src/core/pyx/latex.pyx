@@ -12,7 +12,8 @@ in latex format
 
 
 # This function will tell GiNaC how to format numeric values in latex format.
-cdef void _c_ginac_print_numeric_latex(const c_numeric& num, const c_ginac_latex_printer& c, unsigned level):
+
+cdef void _c_ginac_print_numeric_latex(const c_numeric& num, const c_ginac_latex_printer& c, unsigned level) noexcept:
     if not num.is_integer() and not num.is_rational() and not num.is_real():
         # For the moment, its supposed that we only work with integers, reals or rationals
         raise RuntimeError('Latex printing on numbers only supports integers, rationals and reals')

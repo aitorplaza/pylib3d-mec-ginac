@@ -4,6 +4,7 @@ Description:
 Setup script to install pylib3d-mec-ginac library.
 '''
 
+
 # Import statements
 
 
@@ -36,8 +37,8 @@ import subprocess
 ######## INSTALLATION CONFIGURATION ########
 
 # Remove all graphical interface modules ( minimum installation )
-INSTALL_GUI = environ.get('INSTALL_GUI', 'yes') in ('yes', 'true')
-
+# INSTALL_GUI = environ.get('INSTALL_GUI', 'yes') in ('yes', 'true')
+INSTALL_GUI = 'false'
 
 
 ######## PACKAGE DESCRIPTION ########
@@ -176,11 +177,12 @@ EXTENSION_SOURCES = list(chain([PYX_MAIN], map(partial(join, CPP_DIR), listdir(C
 
 
 # This list holds all the extensions defined by this library
+print(f"DEBUG: INCLUDE_DIR = {abspath(INCLUDE_DIR)}")
 EXTENSIONS = [
     Extension(
         name=EXTENSION_NAME,
         sources=EXTENSION_SOURCES,
-        include_dirs=[INCLUDE_DIR],
+        include_dirs=[abspath(INCLUDE_DIR)],
         library_dirs=[abspath(LIBRARIES_DIR)],
         runtime_library_dirs=[RUNTIME_LIBRARIES_DIR],
         libraries=LIBRARIES,
@@ -238,11 +240,6 @@ RUNTIME_CONFIG = {
     # Default simulation time multiplier
     'SIMULATION_TIME_MULTIPLIER': 1
 }
-
-
-
-
-
 
 
 
@@ -323,8 +320,8 @@ if __name__ == '__main__':
     ## Finally install runtime dependency libraries
     print('- Installing runtime dependency libraries', end='')
     with output_suppressed():
-        for lib in listdir(LIBRARIES_DIR):
-            src, dst = join(LIBRARIES_DIR, lib), join(RUNTIME_LIBRARIES_DIR, lib)
+        for lib in listdir(join(root_dir, LIBRARIES_DIR)):
+            src, dst = join(root_dir, LIBRARIES_DIR, lib), join(RUNTIME_LIBRARIES_DIR, lib)
             print(f'Copying file {src} to {dst}')
             copyfile(src, dst)
     print(' [done]')
@@ -332,18 +329,18 @@ if __name__ == '__main__':
 
     ## Generate C-Python extension
     print('- Generating cpython extension', end='')
-    with output_suppressed():
-        extensions = cythonize(EXTENSIONS,
-            compiler_directives={'language_level': 3}, nthreads=2, force=True)
+    # with output_suppressed(): # Temporarily disable output suppression
+    extensions = cythonize(EXTENSIONS,
+        compiler_directives={'language_level': 3}, nthreads=2, force=True)
     print(' [done]')
 
 
     ## Invoke distutils setup
     print("- Compiling extension and installing package", end='')
-    with output_suppressed():
-        setup(
-            name=NAME,
-            version=VERSION,
+    # with output_suppressed(): # Temporarily disable output suppression
+    setup(
+        name=NAME,
+        version=VERSION,
 
             author=AUTHOR,
             author_email=AUTHOR_EMAIL,

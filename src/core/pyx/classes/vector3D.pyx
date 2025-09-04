@@ -290,7 +290,11 @@ cdef class Vector3D(Matrix):
         Get this vector negated.
         :rtype: Vector3D
         '''
-        return _vector_from_c_value(-c_deref(<c_Vector3D*>self._get_c_handler()))
+        #return _vector_from_c_value(-c_deref(<c_Vector3D*>self._get_c_handler()))
+        return _vector_from_c_value(
+            Expr(-1)._c_handler *\
+            c_deref(<c_Vector3D*>self._get_c_handler())
+        )
 
 
     def __add__(Vector3D self, other):
@@ -541,3 +545,4 @@ def cross(v, w):
 ######## Aliases for class Vector3D ########
 
 Vec3D = Vector3D
+
