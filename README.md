@@ -27,6 +27,12 @@ curl https://raw.githubusercontent.com/Vykstorm/pylib3d-mec-ginac/stable/install
 python setup.py --debug install
 ```
 
+### Compiling without GUI
+
+```bash
+export INSTALL_GUI=false
+```
+
 ## Usage
 
 This software can be used in different ways.
