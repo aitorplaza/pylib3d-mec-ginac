@@ -694,6 +694,14 @@ cdef class Matrix(Object):
         return _matrix_from_c_value(-c_deref(self._get_c_handler()))
 
 
+    def __rmul__(Matrix self, right_op):
+        '''
+        Multiplies this matrix with another (left operand is numeric). The result is a Matrix.
+        :rtype: Matrix
+        '''
+        return self * right_op
+
+
     def __add__(Matrix self, other):
         '''
         Performs the sum operation between two matrices. The result

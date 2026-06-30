@@ -206,6 +206,15 @@ cdef class Expr(Object):
         return _expr_from_c(c_sym_pow(Expr(base)._c_handler, Expr(exp)._c_handler))
 
 
+    def __rpow__(self, other):
+        '''
+        :rtype: Expr
+        Raises a base to the power of this expression.
+        The result is an expression.
+        '''
+        return pow(Expr(other), self)
+
+
 
     def __truediv__(self, other):
         '''

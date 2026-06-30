@@ -2344,3 +2344,10 @@ for _geom_type in map(bytes.decode, _geom_types):
     getattr(System, f'get_{_geom_ptype}').__doc__ = _pgetter_docstring
     getattr(System, f'has_{_geom_type}').__doc__ = _checker_docstring
     getattr(System, _geom_ptype).__doc__ = _pgetter_prop_docstring
+
+
+# Wrapper so derivative can be called as sys.derivative(expr) or sys.derivative(expr, symbol)
+def _derivative_wrapper(self, x, *args, **kwargs):
+    return self._derivative((x,) + args, kwargs)
+
+System.derivative = _derivative_wrapper

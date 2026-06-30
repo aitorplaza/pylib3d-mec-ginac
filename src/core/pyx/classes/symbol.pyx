@@ -317,6 +317,15 @@ cdef class SymbolNumeric(Object):
         return pow(Expr(self), other, modulo)
 
 
+    def __rpow__(self, other):
+        '''
+        :rtype: Expr
+        Raises a base to the power of this symbol.
+        The result is an expression.
+        '''
+        return pow(Expr(other), Expr(self))
+
+
 
 
     ######## Number conversions ########

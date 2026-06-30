@@ -166,6 +166,15 @@ cdef class Wrench3D(Object):
             c_deref((<Wrench3D>left_op)._c_handler))
 
 
+    def __rmul__(self, other):
+        '''
+        Multiplies this wrench by a scalar (left operand is numeric).
+        The result is a wrench.
+        :rtype: Wrench3D
+        '''
+        return self * other
+
+
 
     def __truediv__(left_op, right_op):
         pass

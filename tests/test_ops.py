@@ -36,7 +36,7 @@ def operands(system):
         vector,
         tensor,
         wrench
-    ])
+    ], dtype=object)
 
 
 
@@ -106,7 +106,7 @@ def test_sum_subtract(operands):
         [ None,    None,      None,     ...,        Vector3D,   ...,        ...      ],  # vector
         [ None,    None,      None,     ...,        ...,        Tensor3D,   ...      ],  # tensor
         [ None,    None,      None,     ...,        ...,        ...,        Wrench3D ]   # wrench
-    ])
+    ], dtype=object)
     check_binary_op(operator.add, operands, results)
     check_binary_op(operator.sub, operands, results)
 
@@ -126,7 +126,7 @@ def test_mult(operands):
         [ Vector3D,  Vector3D,  Vector3D, None,       Expr,       None,       None     ],  # vector
         [ Tensor3D,  Tensor3D,  Tensor3D, None,       Vector3D,   Tensor3D,   None     ],  # tensor
         [ Wrench3D,  Wrench3D,  Wrench3D, None,       None,       None,       Wrench3D ]   # wrench
-    ])
+    ], dtype=object)
     check_binary_op(operator.mul, operands, results)
 
 
@@ -156,7 +156,7 @@ def test_div(operands):
         [ Vector3D,  Vector3D,  Vector3D, None,       None,       None,       None     ],  # vector
         [ Tensor3D,  Tensor3D,  Tensor3D, None,       None,       None,       None     ],  # tensor
         [ Wrench3D,  Wrench3D,  Wrench3D, None,       None,       None,       None     ]   # wrench
-    ])
+    ], dtype=object)
     check_binary_op(operator.truediv, operands, results)
 
 
@@ -175,7 +175,7 @@ def test_pow(operands):
         [ None,      None,      None,     None,       None,       None,       None     ],  # vector
         [ None,      None,      None,     None,       None,       None,       None     ],  # tensor
         [ None,      None,      None,     None,       None,       None,       None     ]   # wrench
-    ])
+    ], dtype=object)
     check_binary_op(operator.pow, operands, results)
 
 
