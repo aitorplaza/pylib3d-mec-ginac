@@ -27,10 +27,18 @@ curl https://raw.githubusercontent.com/Vykstorm/pylib3d-mec-ginac/stable/install
 python setup.py --debug install
 ```
 
-### Compiling without GUI
+### Compiling and Installing
+
+To compile and install the Python library with full GUI and 3D viewer support:
 
 ```bash
-export INSTALL_GUI=false
+INSTALL_GUI=yes python setup.py install
+```
+
+To compile and install only the core symbolic engine without GUI dependencies:
+
+```bash
+INSTALL_GUI=no python setup.py install
 ```
 
 ## Usage
@@ -48,19 +56,26 @@ python
 >>> ...
 ```
 
-### As a framework
+### As a framework (with 3D Viewer & IDE)
 
 Use the integrated graphical user interface where you can build and simulate
 mechanical systems within this library.
 The interface includes an interactive console to run arbitrary python code
 and a 3D viewer to display the mechanism.
 
-The contextual menu provides options to change simulation parameters, open, edit
-and run python files, customize the interface, among other things.
-
-Execute the next statement to start using it:
+Execute the next statement to start using it with the interactive IDE:
 ```bash
 python -m lib3d_mec_ginac
+```
+
+To launch only the 3D viewer without the IDE editor/console:
+```bash
+python -m lib3d_mec_ginac --no-ide <path_to_example_or_script>
+```
+
+To run a script in non-graphical mode:
+```bash
+python -m lib3d_mec_ginac --no-gui <path_to_example_or_script>
 ```
 
 ![framework](docs/images/framework.png)
@@ -115,7 +130,7 @@ python -m lib3d_mec_ginac examples/four_bar
 
 Go to the directory where you downloaded this repository and run this example with:
 ```
-python -m lib3d_mec_ginac example/simple_pendulum
+python -m lib3d_mec_ginac examples/simple_pendulum
 ```
 
 

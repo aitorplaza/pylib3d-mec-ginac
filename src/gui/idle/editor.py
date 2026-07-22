@@ -1,6 +1,8 @@
 import importlib.abc
 import importlib.util
 import os
+import sys
+import re
 import platform
 import string
 import tokenize

@@ -78,7 +78,7 @@ if _filepath is not None:
 
         del code, file, os
     except FileNotFoundError:
-        parser.error(f'File "{filepath}" not found')
+        raise FileNotFoundError(f'File "{_filepath}" not found')
 del _filepath
 
 

@@ -44,7 +44,6 @@ import threading
 import time
 import tokenize
 import warnings
-import pyglet
 from itertools import islice
 from functools import partial
 import inspect

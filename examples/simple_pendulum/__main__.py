@@ -51,15 +51,15 @@ Phi = Matrix([
     # Simple armonic equation
     alpha - A * cos(sqrt(g / l) * t)
 ]).transpose()
-dPhi = derivative(Phi)
-ddPhi = derivative(dPhi)
+dPhi = timederivative(Phi)
+ddPhi = timederivative(dPhi)
 
 # Phi_init
 Phi_init = Matrix([
     alpha - alpha0,
     dalpha
 ]).transpose()
-dPhi_init = derivative(Phi_init)
+dPhi_init = timederivative(Phi_init)
 
 
 # Phi_q

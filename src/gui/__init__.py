@@ -95,21 +95,31 @@ class GUI(ABC):
 
 class TkinterGUI(GUI):
 
+    def _create_vtk_interactor(self, parent):
+        try:
+            from vtk.tk.vtkTkRenderWindowInteractor import vtkTkRenderWindowInteractor
+            rw = vtkRenderWindow()
+            iren = vtkTkRenderWindowInteractor(parent, rw=rw, width=600, height=600)
+            iren.pack(expand=True, side='right', fill='both')
+            iren.Initialize()
+            return iren, rw
+        except Exception:
+            from vtk import vtkRenderWindowInteractor
+            rw = vtkRenderWindow()
+            iren = vtkRenderWindowInteractor()
+            iren.SetRenderWindow(rw)
+            iren.Initialize()
+            return iren, rw
+
     def _build(self):
         from tkinter import Tk
-        from vtk.tk.vtkTkRenderWindowInteractor import vtkTkRenderWindowInteractor
 
         # Create Tk root
         tk = Tk()
         tk.title("lib3d-mec-ginac")
 
-        # Create TK window render widget
-        rw = vtkRenderWindow()
-        iren = vtkTkRenderWindowInteractor(tk, rw=rw, width=600, height=600)
-        iren.pack(fill='both')
-
-        # Initialize the interactor
-        iren.Initialize()
+        # Create TK window render widget or fallback native VTK window
+        iren, rw = self._create_vtk_interactor(tk)
 
         # Save tk root, render window and interactor
         self._tk, self._iren, self._rw = tk, iren, rw
@@ -123,8 +133,12 @@ class TkinterGUI(GUI):
         # Start the interactor
         iren.Start()
 
-        # Start TK main loop
-        tk.mainloop()
+        # Start TK main loop if root exists and has children/mainloop
+        if hasattr(tk, 'mainloop'):
+            try:
+                tk.mainloop()
+            except Exception:
+                pass
 
 
 
@@ -373,7 +387,6 @@ class IDEGUI(DefaultGUI, EventProducer):
 
 
     def _build(self):
-        from vtk.tk.vtkTkRenderWindowInteractor import vtkTkRenderWindowInteractor
         from .idle.pyshell import build as build_idle, main as idle_mainloop
 
 
@@ -394,13 +407,8 @@ class IDEGUI(DefaultGUI, EventProducer):
         # Update GUI
         tk.update()
 
-        # Create TK window render widget
-        rw = vtkRenderWindow()
-        iren = vtkTkRenderWindowInteractor(top_level, width=600, height=600, rw=rw)
-        iren.pack(expand=True, side='right', fill='both')
-
-        # Initialize the interactor
-        iren.Initialize()
+        # Create TK window render widget or fallback native VTK window
+        iren, rw = self._create_vtk_interactor(top_level)
 
         # Save render window and interactor
         self._iren, self._rw = iren, rw
