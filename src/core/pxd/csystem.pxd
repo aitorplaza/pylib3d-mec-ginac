@@ -166,3 +166,6 @@ cdef extern from "System.h":
         void export_environment_m()
         void export_function_MATLAB(string, string, Matrix, lst, lst)
         void export_function_MATLAB(string, string, Matrix, lst, lst,string)
+        void export_environment_py()
+        void export_function_python(string, string, Matrix, lst, lst)
+        void export_function_python(string, string, Matrix, lst, lst, string)

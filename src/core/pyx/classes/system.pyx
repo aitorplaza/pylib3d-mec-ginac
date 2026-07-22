@@ -1497,6 +1497,44 @@ cdef class _System:
     cpdef _export_environment_MATLAB(self):
         self._c_handler.export_environment_m()
 
+    cpdef _export_function_python(self, matrix, func_name, func_out_name=None, deps=None):
+        if not isinstance(matrix, (str, Matrix)):
+            raise TypeError('matrix argument must be a str or Matrix instance')
+        if isinstance(matrix, str):
+            matrix = self.get_matrix(matrix)
+
+        if not isinstance(func_name, str):
+            raise TypeError('function name must be a string')
+
+        if func_out_name is not None and not isinstance(func_out_name, str):
+            raise TypeError('output function name must be a string')
+
+        if func_out_name is None:
+            func_out_name = func_name
+
+        cdef c_lst atom_lst
+        cdef c_lst expr_lst
+
+        # Optimize matrix list
+        c_matrix_list_optimize(c_deref( (<Matrix>matrix)._get_c_handler()), atom_lst, expr_lst)
+
+        if deps is None:
+            self._c_handler.export_function_python(
+                <bytes>func_name.encode(), <bytes>func_out_name.encode(),
+                c_deref((<Matrix>matrix)._get_c_handler()),
+                atom_lst, expr_lst
+            )
+        else:
+            self._c_handler.export_function_python(
+                <bytes>func_name.encode(), <bytes>func_out_name.encode(),
+                c_deref((<Matrix>matrix)._get_c_handler()),
+                atom_lst, expr_lst, <bytes>deps.encode()
+            )
+
+    cpdef _export_environment_python(self):
+        self._c_handler.export_environment_py()
+
+
     ######## Mixin ########
 
     cpdef _set_autogen_latex_names(self, enabled):

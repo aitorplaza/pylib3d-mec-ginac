@@ -1735,6 +1735,25 @@ class System(_System, EventProducer):
     export_numeric_func_MATLAB = export_numeric_function_MATLAB
     export_numeric_init_func_MATLAB = export_numeric_init_function_MATLAB
 
+    def export_numeric_function_python(self, matrix, func_name, func_out_name=None, deps=None):
+        '''export_numeric_function_python(matrix: Matrix, func_name: str, func_out_name: str, deps: str)
+
+        Build a Python script which defines a function that evaluates the given symbolic
+        matrix numerically using numpy.
+        '''
+        self._export_function_python(matrix, func_name, func_out_name, deps)
+
+    def export_environment_python(self):
+        '''export_environment_python()
+
+        It exports system environment (q, dq, ddq, param, joints, ...) to environment.py format
+        '''
+        self._export_environment_python()
+
+    export_numeric_func_python = export_numeric_function_python
+    export_environment_py = export_environment_python
+
+
 
 
 
