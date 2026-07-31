@@ -29,7 +29,7 @@ using std::vector;
 
 extern int atomization;//0-> work without atomization; 1-> work with atomization
 extern int gravity;//0-> work with down gravity; 1-> work with up gravity
-extern void  (  * outError ) (const char *  ) noexcept;
+extern void  (  * outError ) (const char *  );
 void printError ( char * args );
 
 string itoa( const long int& x );
@@ -104,7 +104,7 @@ Tensor3D unatomize ( Tensor3D m );
 
 Wrench3D unatomize ( Wrench3D m );
 
-
+ex atomize ( ex m );
 
 /*
 This function atomizes a Matrix

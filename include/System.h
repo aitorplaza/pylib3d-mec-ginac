@@ -468,6 +468,13 @@ class System{
         /* Export environment.m file*/
         void export_environment_m ( void );
 
+        /* Export environment.py file*/
+        void export_environment_py ( void );
+        void export_function_python(string function_name, string function_out, Matrix symbolic_matrix_function);
+        void export_function_python(string function_name, string function_out, Matrix symbolic_matrix_function, string s_in);
+        void export_function_python(string function_name, string function_out, Matrix symbolic_matrix_function, lst Matrix_atom_list, lst Matrix_atom_expression_list);
+        void export_function_python(string function_name, string function_out, Matrix symbolic_matrix_function, lst Matrix_atom_list, lst Matrix_atom_expression_list, string s_in);
+
         /* Export config.ini file*/
         void export_config_ini ( void );
         void export_param_ini ( void );
@@ -498,7 +505,7 @@ class System{
         void Matrix_Calculation(lst coord_indep_init ,lst vel_indep_init ,System &sys, int method);
         void Matrix_Calculation(Matrix &Phi,lst coord_indep_init ,lst vel_indep_init,  System &sys, int method);
         void Matrix_Calculation(Matrix &Phi, lst coord_indep_init ,lst vel_indep_init ,System &sys, int method, Matrix &dPhiNH);
-
+        void Matrix_Calculation(Matrix &Phi, lst coord_indep_init ,lst vel_indep_init , Matrix &Dynamic_Equations, int method, Matrix &dPhiNH);
 
 
 

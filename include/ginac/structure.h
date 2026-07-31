@@ -3,7 +3,7 @@
  *  Wrapper template for making GiNaC classes out of C++ structures. */
 
 /*
- *  GiNaC Copyright (C) 1999-2019 Johannes Gutenberg University Mainz, Germany
+ *  GiNaC Copyright (C) 1999-2023 Johannes Gutenberg University Mainz, Germany
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -178,7 +178,7 @@ public:
 	ex series(const relational & r, int order, unsigned options = 0) const override { return inherited::series(r, order, options); }
 
 	// rational functions
-	ex normal(exmap & repl, exmap & rev_lookup) const override { return inherited::normal(repl, rev_lookup); }
+	ex normal(exmap & repl, exmap & rev_lookup, lst & modifier) const override { return inherited::normal(repl, rev_lookup, modifier); }
 	ex to_rational(exmap & repl) const override { return inherited::to_rational(repl); }
 	ex to_polynomial(exmap & repl) const override { return inherited::to_polynomial(repl); }
 

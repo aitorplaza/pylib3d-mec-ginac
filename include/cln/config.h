@@ -20,7 +20,7 @@
  */
 /* #undef GMP_DEMANDS_UINTD_INT */
 
-/* #undef GMP_DEMANDS_UINTD_LONG */
+#define GMP_DEMANDS_UINTD_LONG 1
 
 /* #undef GMP_DEMANDS_UINTD_LONG_LONG */
 

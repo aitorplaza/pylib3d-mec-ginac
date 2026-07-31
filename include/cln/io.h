@@ -37,29 +37,27 @@ inline void fprint (std::ostream& stream, const char * string)
 }
 
 
+extern void fprintdecimal (std::ostream& stream, unsigned int x);
+extern void fprintdecimal (std::ostream& stream, int x);
+
 extern void fprintdecimal (std::ostream& stream, unsigned long x);
 extern void fprintdecimal (std::ostream& stream, long x);
 
-inline void fprintdecimal (std::ostream& stream, unsigned int x)
-{
-	fprintdecimal(stream,(unsigned long)x);
-}
-inline void fprintdecimal (std::ostream& stream, int x)
-{
-	fprintdecimal(stream,(long)x);
-}
+#ifdef HAVE_LONGLONG
+extern void fprintdecimal (std::ostream& stream, unsigned long long x);
+extern void fprintdecimal (std::ostream& stream, long long x);
+#endif
+
+extern void fprinthexadecimal (std::ostream& stream, unsigned int x);
+extern void fprinthexadecimal (std::ostream& stream, int x);
 
 extern void fprinthexadecimal (std::ostream& stream, unsigned long x);
 extern void fprinthexadecimal (std::ostream& stream, long x);
 
-inline void fprinthexadecimal (std::ostream& stream, unsigned int x)
-{
-	fprinthexadecimal(stream,(unsigned long)x);
-}
-inline void fprinthexadecimal (std::ostream& stream, int x)
-{
-	fprinthexadecimal(stream,(long)x);
-}
+#ifdef HAVE_LONGLONG
+extern void fprinthexadecimal (std::ostream& stream, unsigned long long x);
+extern void fprinthexadecimal (std::ostream& stream, long long x);
+#endif
 
 
 struct cl_print_flags;

@@ -257,7 +257,8 @@ template<class type>
 inline const type& the(const cl_number& x)
 {
 	// check that sizeof(type)==sizeof(cl_number)
-	typedef int assertion1 [1 - 2 * (sizeof(type) != sizeof(cl_number))];
+	static_assert(sizeof(type)==sizeof(cl_number),
+	              "sizeof(type)!=sizeof(cl_number)");
 	return *(const type *) &x;
 }
 // Conversions to subtypes without checking, macro version:

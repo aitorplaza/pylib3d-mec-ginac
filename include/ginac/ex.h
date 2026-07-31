@@ -3,7 +3,7 @@
  *  Interface to GiNaC's light-weight expression handles. */
 
 /*
- *  GiNaC Copyright (C) 1999-2019 Johannes Gutenberg University Mainz, Germany
+ *  GiNaC Copyright (C) 1999-2023 Johannes Gutenberg University Mainz, Germany
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ namespace GiNaC {
  *  of this class in every object file that makes use of our flyweights in
  *  order to guarantee proper initialization.  Hence we put it into this
  *  file which is included by every relevant file anyways.  This is modeled
- *  after section 27.4.2.1.6 of the C++ standard, where cout and friends are
+ *  after section [ios::Init] of the C++ standard, where cout and friends are
  *  set up.
  *
  *  @see utils.cpp */
@@ -87,6 +87,8 @@ public:
 	ex(unsigned int i);
 	ex(long i);
 	ex(unsigned long i);
+	ex(long long i);
+	ex(unsigned long long i);
 	ex(double const d);
 
 	/** Construct ex from string and a list of symbols. The input grammar is
@@ -132,8 +134,8 @@ public:
 	// operand access
 	size_t nops() const { return bp->nops(); }
 	ex op(size_t i) const { return bp->op(i); }
-	ex operator[](const ex & index) const { return (*bp)[index]; }
-	ex operator[](size_t i) const { return (*bp)[i]; }
+	ex operator[](const ex & index) const { return (const_cast<const basic&>(*bp))[index]; }
+	ex operator[](size_t i) const { return (const_cast<const basic&>(*bp))[i]; }
 	ex & let_op(size_t i);
 	ex & operator[](const ex & index);
 	ex & operator[](size_t i);
@@ -236,6 +238,8 @@ private:
 	static basic & construct_from_uint(unsigned int i);
 	static basic & construct_from_long(long i);
 	static basic & construct_from_ulong(unsigned long i);
+	static basic & construct_from_longlong(long long i);
+	static basic & construct_from_ulonglong(unsigned long long i);
 	static basic & construct_from_double(double d);
 	static ptr<basic> construct_from_string_and_lst(const std::string &s, const ex &l);
 	void makewriteable();
@@ -286,6 +290,18 @@ ex::ex(long i) : bp(construct_from_long(i))
 
 inline
 ex::ex(unsigned long i) : bp(construct_from_ulong(i))
+{
+	GINAC_ASSERT(bp->flags & status_flags::dynallocated);
+}
+
+inline
+ex::ex(long long i) : bp(construct_from_longlong(i))
+{
+	GINAC_ASSERT(bp->flags & status_flags::dynallocated);
+}
+
+inline
+ex::ex(unsigned long long i) : bp(construct_from_ulonglong(i))
 {
 	GINAC_ASSERT(bp->flags & status_flags::dynallocated);
 }
@@ -351,12 +367,17 @@ bool ex::is_equal(const ex & other) const
 
 // Iterators
 
-class const_iterator : public std::iterator<std::random_access_iterator_tag, ex, ptrdiff_t, const ex *, const ex &> {
+class const_iterator {
 	friend class ex;
 	friend class const_preorder_iterator;
 	friend class const_postorder_iterator;
-
 public:
+	using iterator_category = std::random_access_iterator_tag;
+	using value_type = ex;
+	using difference_type = ptrdiff_t;
+	using pointer = const ex *;
+	using reference = const ex &;
+
 	const_iterator() noexcept {}
 
 private:
@@ -497,8 +518,13 @@ struct _iter_rep {
 
 } // namespace internal
 
-class const_preorder_iterator : public std::iterator<std::forward_iterator_tag, ex, ptrdiff_t, const ex *, const ex &> {
+class const_preorder_iterator {
 public:
+	using iterator_category = std::forward_iterator_tag;
+	using value_type = ex;
+	using difference_type = ptrdiff_t;
+	using pointer = const ex *;
+	using reference = const ex &;
 	const_preorder_iterator() noexcept {}
 
 	const_preorder_iterator(const ex &e, size_t n)
@@ -561,8 +587,13 @@ private:
 	}
 };
 
-class const_postorder_iterator : public std::iterator<std::forward_iterator_tag, ex, ptrdiff_t, const ex *, const ex &> {
+class const_postorder_iterator {
 public:
+	using iterator_category = std::forward_iterator_tag;
+	using value_type = ex;
+	using difference_type = ptrdiff_t;
+	using pointer = const ex *;
+	using reference = const ex &;
 	const_postorder_iterator() noexcept {}
 
 	const_postorder_iterator(const ex &e, size_t n)

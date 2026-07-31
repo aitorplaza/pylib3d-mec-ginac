@@ -6,8 +6,11 @@
 // CPU and other
 #include "cln/config.h"
 
-// char_bitsize, short_bitsize, long_bitsize, long_long_bitsize
+// char_bitsize, short_bitsize, long_bitsize, long_long_bitsize, pointer_bitsize
 #include "cln/intparam.h"
+
+// intptr_t, uintptr_t
+#include <stdint.h>
 
 // Elementary arithmetic types of given width:
   // 8 bits
@@ -48,7 +51,7 @@
     #undef HAVE_LONGLONG
    #endif
   #endif
-  #if defined(HAVE_LONGLONG) && (defined(__alpha__) || defined(__ia64__) || defined(__mips64__) || defined(__powerpc64__) || defined(__s390x__) || (defined(__sparc__) && defined(__arch64__)) || defined(__x86_64__) || defined(__aarch64__) || (defined(__riscv) && __riscv_xlen == 64))
+  #if defined(HAVE_LONGLONG) && (defined(__alpha__) || defined(__ia64__) || defined(__mips64__) || defined(__powerpc64__) || defined(__s390x__) || (defined(__sparc__) && defined(__arch64__)) || (defined(__x86_64__) || defined(_M_AMD64)) || defined(__aarch64__) || (defined(__riscv) && __riscv_xlen == 64)) || defined(__e2k__)
     // 64 bit registers in hardware
     #define HAVE_FAST_LONGLONG
   #endif
@@ -76,7 +79,7 @@
 
 // Integer type used for counters.
 // Constraint: sizeof(uintC) >= sizeof(uintL)
-  #if (defined(HAVE_FAST_LONGLONG) && (defined(__alpha__) || defined(__ia64__) || defined(__powerpc64__) || defined(__s390x__) || (defined(__sparc__) && defined(__arch64__)) || defined(__x86_64__) || defined(__aarch64__) || defined(__mips64__) || (defined(__riscv) && __riscv_xlen == 64)))
+  #if (defined(HAVE_FAST_LONGLONG) && (defined(__alpha__) || defined(__ia64__) || defined(__powerpc64__) || defined(__s390x__) || (defined(__sparc__) && defined(__arch64__)) || defined(__x86_64__) || defined(__aarch64__) || defined(__mips64__) || (defined(__riscv) && __riscv_xlen == 64) || defined(__e2k__)))
     #define intCsize long_bitsize
     typedef long           sintC;
     typedef unsigned long  uintC;
@@ -88,7 +91,7 @@
 
 // Integer type used for lfloat exponents.
 // Constraint: sizeof(uintE) >= sizeof(uintC)
-  #if (defined(HAVE_LONGLONG) && (defined(__alpha__) || defined(__ia64__) || defined(__powerpc64__) || defined(__s390x__) || (defined(__sparc__) && defined(__arch64__)) || defined(__x86_64__) || defined(__i386__) || defined(__mips__) || defined(__rs6000__) || defined(__aarch64__) || (defined(__riscv) && __riscv_xlen == 64)))
+  #if (defined(HAVE_LONGLONG) && (defined(__alpha__) || defined(__ia64__) || defined(__powerpc64__) || defined(__s390x__) || (defined(__sparc__) && defined(__arch64__)) || defined(__x86_64__) || defined(__i386__) || defined(__mips__) || defined(__rs6000__) || defined(__aarch64__) || (defined(__riscv) && __riscv_xlen == 64) || defined(__e2k__)))
     #define intEsize 64
     typedef sint64  sintE;
     typedef uint64  uintE;
@@ -99,15 +102,17 @@
   #endif
 
 // Integer type as large as a pointer.
-// Assumption: sizeof(long) == sizeof(void*)
-  #define intPsize long_bitsize
-  typedef long           sintP;
-  typedef unsigned long  uintP;
+// Assumption: sizeof(intptr_t) == sizeof(void*)
+  #define intPsize pointer_bitsize
+  typedef intptr_t   sintP;
+  typedef uintptr_t  uintP;
 
 // Integer type used for the value of a fixnum.
-  #define intVsize long_bitsize
-  typedef long           sintV;
-  typedef unsigned long  uintV;
+  // It must be like this, because in a couple of places we assume
+  // cl_value_shift + cl_value_len == cl_pointer_size.
+  #define intVsize intPsize
+  typedef sintP  sintV;
+  typedef uintP  uintV;
 
 // Numbers in the heap are stored as "digit" sequences.
 // A digit is an unsigned int with intDsize bits.
@@ -127,7 +132,7 @@
     typedef int sintD;
     typedef unsigned int uintD;
   #else  // we are not using GMP, so just guess something reasonable
-    #if (defined(HAVE_FAST_LONGLONG) && (defined(__alpha__) || defined(__ia64__) || defined(__powerpc64__) || (defined(__sparc__) && defined(__arch64__)) || defined(__s390x__) || defined(__x86_64__) || defined(__aarch64__) || defined(__mips64__) || (defined(__riscv) && __riscv_xlen == 64)))
+    #if (defined(HAVE_FAST_LONGLONG) && (defined(__alpha__) || defined(__ia64__) || defined(__powerpc64__) || (defined(__sparc__) && defined(__arch64__)) || defined(__s390x__) || defined(__x86_64__) || defined(__aarch64__) || defined(__mips64__) || (defined(__riscv) && __riscv_xlen == 64) || defined(__e2k__)))
       #define intDsize 64
       typedef sint64  sintD;
       typedef uint64  uintD;

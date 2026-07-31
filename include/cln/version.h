@@ -5,7 +5,7 @@
 #define _CL_VERSION_H
 
 /* CLN release number */
-#define CL_VERSION 1.3.4
+#define CL_VERSION 1.3.6
 
 /* Major version number of CLN */
 #define CL_VERSION_MAJOR 1
@@ -14,7 +14,7 @@
 #define CL_VERSION_MINOR 3
 
 /* Patchlevel version number of CLN */
-#define CL_VERSION_PATCHLEVEL 4
+#define CL_VERSION_PATCHLEVEL 6
 
 namespace cln {
 

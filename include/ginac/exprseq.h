@@ -3,7 +3,7 @@
  *  Definition of GiNaC's exprseq. */
 
 /*
- *  GiNaC Copyright (C) 1999-2019 Johannes Gutenberg University Mainz, Germany
+ *  GiNaC Copyright (C) 1999-2023 Johannes Gutenberg University Mainz, Germany
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,6 +30,11 @@
 namespace GiNaC {
 
 typedef container<std::vector> exprseq;
+
+/** Declaration of container::reg_info for exprseq. */
+#ifndef _MSC_VER  // workaround error C2766: explicit specialization; 'reg_info' has already been defined
+template<> registered_class_info exprseq::reg_info;
+#endif
 
 // defined in exprseq.cpp
 template<> bool exprseq::info(unsigned inf) const;

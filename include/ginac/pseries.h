@@ -3,7 +3,7 @@
  *  Interface to class for extended truncated power series. */
 
 /*
- *  GiNaC Copyright (C) 1999-2019 Johannes Gutenberg University Mainz, Germany
+ *  GiNaC Copyright (C) 1999-2023 Johannes Gutenberg University Mainz, Germany
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ public:
 	ex evalf() const override;
 	ex series(const relational & r, int order, unsigned options = 0) const override;
 	ex subs(const exmap & m, unsigned options = 0) const override;
-	ex normal(exmap & repl, exmap & rev_lookup) const override;
+	ex normal(exmap & repl, exmap & rev_lookup, lst & modifier) const override;
 	ex expand(unsigned options = 0) const override;
 	ex conjugate() const override;
 	ex real_part() const override;
