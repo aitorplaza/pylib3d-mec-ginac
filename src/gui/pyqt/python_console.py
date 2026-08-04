@@ -209,8 +209,20 @@ class PythonConsoleWidget(QWidget):
     def execute_code(self, code_string):
         '''
         Execute a code string (from the editor) in the shared namespace.
+        Resets the namespace before each execution so every run is clean.
         Captures stdout/stderr and displays results in the output area.
         '''
+        # Reset namespace for a fresh execution
+        self.namespace.clear()
+        self.namespace.update({'__name__': '__main__', '__doc__': None})
+        self.console = code.InteractiveConsole(self.namespace)
+
+        # Re-import lib3d_mec_ginac if available
+        try:
+            exec('from lib3d_mec_ginac import *', self.namespace)
+        except ImportError:
+            pass
+
         self.append_text('--- Running script ---', '#808080')
 
         old_stdout = sys.stdout
