@@ -81,6 +81,42 @@ python -m lib3d_mec_ginac --no-gui <path_to_example_or_script>
 ![framework](docs/images/framework.png)
 
 
+### PyQt IDE (MATLAB-style interface)
+
+A standalone MATLAB-style IDE built with PyQt5 that provides three integrated panels in a single window:
+
+```
+┌────────────────────┬──────────────────────────┐
+│                    │                          │
+│   Code Editor      │   3D VTK Visualizer     │
+│   (Python syntax   │   (mechanical scene,    │
+│    highlighting,   │    mouse interaction,    │
+│    line numbers)   │    object picking)       │
+│                    │                          │
+├────────────────────┴──────────────────────────┤
+│                                               │
+│   Interactive Python Console (>>> prompt)      │
+│   (shared namespace with the editor)          │
+│                                               │
+└───────────────────────────────────────────────┘
+```
+
+**Features:**
+- **Code Editor**: Python syntax highlighting (QScintilla), line numbers, auto-indentation, dark theme
+- **3D Viewer**: VTK-based 3D visualizer with mouse rotation/zoom/pan and object picking
+- **Interactive Console**: Python REPL with shared namespace — execute a script with ▶ Run and then inspect variables in the console
+- **Clean execution**: Each ▶ Run resets the namespace, so every execution starts fresh
+- **Menus**: File (New/Open/Save), Edit (Run/Reset), Simulation (Start/Stop/Pause), Scene (toggle visibility of points, vectors, frames, solids, grid)
+- **Keyboard shortcuts**: `F5` Run, `Ctrl+S` Save, `Ctrl+O` Open, `Ctrl+N` New, `Ctrl+Q` Quit
+
+**Launch it as a standalone program:**
+```bash
+python src/gui/pyqt/mec_ginac_ide.py
+```
+
+**Dependencies:** `PyQt5`, `QScintilla` (install with `pip install PyQt5 QScintilla`)
+
+
 ### Try it online
 
 Finally you can run a jupyter notebook and use this library. No installation needed, but features are limited ( 3D viewer is not avaliable ).
