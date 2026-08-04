@@ -56,34 +56,9 @@ python
 >>> ...
 ```
 
-### As a framework (with 3D Viewer & IDE)
+### PyQt IDE
 
-Use the integrated graphical user interface where you can build and simulate
-mechanical systems within this library.
-The interface includes an interactive console to run arbitrary python code
-and a 3D viewer to display the mechanism.
-
-Execute the next statement to start using it with the interactive IDE:
-```bash
-python -m lib3d_mec_ginac
-```
-
-To launch only the 3D viewer without the IDE editor/console:
-```bash
-python -m lib3d_mec_ginac --no-ide <path_to_example_or_script>
-```
-
-To run a script in non-graphical mode:
-```bash
-python -m lib3d_mec_ginac --no-gui <path_to_example_or_script>
-```
-
-![framework](docs/images/framework.png)
-
-
-### PyQt IDE (MATLAB-style interface)
-
-A standalone MATLAB-style IDE built with PyQt5 that provides three integrated panels in a single window:
+A standalone IDE built with PyQt5 that provides three integrated panels in a single window:
 
 ```
 ┌────────────────────┬──────────────────────────┐
@@ -117,16 +92,6 @@ python src/gui/pyqt/mec_ginac_ide.py
 **Dependencies:** `PyQt5`, `QScintilla` (install with `pip install PyQt5 QScintilla`)
 
 
-### Try it online
-
-Finally you can run a jupyter notebook and use this library. No installation needed, but features are limited ( 3D viewer is not avaliable ).
-
-[Try it now!](https://pylib3d-mec-ginac.herokuapp.com/notebooks/Untitled.ipynb)
-
-
-
-
-
 ## Documentation
 
 Most of the classes and methods of the API are documented.
@@ -136,13 +101,6 @@ e.g:
 from lib3d_mec_ginac import System
 help(System)
 ```
-
-Also [this page](https://pylib3d-mec-ginac-docs.herokuapp.com/) contains the reference of the API and a quick start tutorial.
-
-
-
-
-
 ## Examples
 
 
@@ -150,8 +108,6 @@ This library provides a few usage examples under the directory [examples/](examp
 Here we list a few of them
 
 #### Four bar linkage
-
-![four-bar](docs/images/four-bar.gif)
 
 Go to the directory where you downloaded this
 repository and run this example with:
@@ -161,8 +117,6 @@ python -m lib3d_mec_ginac examples/four_bar
 
 
 #### Simple pendulum
-
-![simple-pendulum](docs/images/simple-pendulum.gif)
 
 Go to the directory where you downloaded this repository and run this example with:
 ```
