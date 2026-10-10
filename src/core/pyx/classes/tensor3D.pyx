@@ -118,17 +118,27 @@ cdef class Tensor3D(Matrix):
 
 
     cpdef in_base(self, new_base):
-        '''in_base(new_base: Base) -> Tensor3D
+        '''in_base(new_base: Base | str) -> Tensor3D
         Performs a base change operation on this tensor.
 
-        :param Base base: The new base
+        :param new_base: The new base (as a Base object or its string name)
+        :type new_base: Base, str
+
         :return: A new tensor which is the same as this but with its base changed
 
         :rtype: Tensor3D
 
         '''
+        if isinstance(new_base, (str, bytes)):
+            import sys
+            _sys_mod = sys.modules.get('lib3d_mec_ginac.core.system')
+            if _sys_mod is None:
+                import importlib
+                _sys_mod = importlib.import_module('lib3d_mec_ginac.core.system')
+            new_base = _sys_mod.get_default_system().get_base(new_base)
+
         if not isinstance(new_base, Base):
-            raise TypeError('Input argument must be a Base object')
+            raise TypeError('Input argument must be a Base object or a base name (str)')
 
         return _tensor_from_c_value((<c_Tensor3D*>self._get_c_handler()).in_Base((<Base>new_base)._c_handler))
 

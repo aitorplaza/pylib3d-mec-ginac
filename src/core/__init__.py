@@ -32,9 +32,15 @@ except ImportError:
 __all__ = []
 
 
+# Dynamic system properties exposed at module level
+_SYSTEM_PROPERTIES = ('xyz', 'O', 'abs')
+__all__.extend(_SYSTEM_PROPERTIES)
+
 # This only has effect with python>=3.7 (PEP 562)
 # It "hides" variables starting with _ from the public API
 def __getattr__(name):
+    if name in _SYSTEM_PROPERTIES:
+        return getattr(get_default_system(), name)
     if name.startswith('_') or name not in __all__:
         raise AttributeError(f'{name} is not defined in the pylib3d_mec_ginac library API')
     return globals()[name]

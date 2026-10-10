@@ -28,3 +28,14 @@ except ImportError:
 from .config import runtime_config
 set_atomization_state(runtime_config.ATOMIZATION)
 set_gravity_direction(runtime_config.GRAVITY_DIRECTION)
+
+
+def __getattr__(name):
+    from . import core
+    if hasattr(core, name):
+        return getattr(core, name)
+    raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
+
+
+def __dir__():
+    return __all__.copy()
