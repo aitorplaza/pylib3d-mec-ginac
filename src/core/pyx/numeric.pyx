@@ -142,9 +142,8 @@ class NumericFunction:
         # Parse atoms
         atoms = dict(zip(atoms.keys(), map(parse_expr, atoms.values())))
 
-        # Parse outputs
-        outputs = np.matrix(outputs)
-        outputs = np.matrix(tuple(map(parse_expr, map(methodcaller('item'), outputs.flat)))).reshape(outputs.shape)
+        # Parse outputs (using 2D ndarray to avoid deprecated np.matrix in NumPy 2.x)
+        outputs = np.array([[parse_expr(item) for item in row] for row in outputs], dtype=object)
 
 
         # Initialize internal fields
